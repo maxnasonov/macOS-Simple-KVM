@@ -7,11 +7,13 @@ TOOLS=$PWD/tools
 
 print_usage() {
     echo
-    echo "Usage: $0"
+    echo "Usage: $0 [-s|-m|-c] [<IMAGE_PATH>]"
     echo
     echo " -s, --high-sierra   Fetch High Sierra media."
     echo " -m, --mojave        Fetch Mojave media."
     echo " -c, --catalina      Fetch Catalina media."
+    echo
+    echo " <IMAGE_PATH>        Local path where the image will be saved."
     echo
 }
 
@@ -36,4 +38,9 @@ case $argument in
         ;;
 esac
 
-"$TOOLS/dmg2img" "$TOOLS/FetchMacOS/BaseSystem/BaseSystem.dmg" "$PWD/BaseSystem.img"
+IMAGE_PATH="$2"
+if [ -z "$IMAGE_PATH" ]; then
+    IMAGE_PATH="$PWD/BaseSystem.img"
+fi
+
+"$TOOLS/dmg2img" "$TOOLS/FetchMacOS/BaseSystem/BaseSystem.dmg" "$IMAGE_PATH"
