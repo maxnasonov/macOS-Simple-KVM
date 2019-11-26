@@ -22,6 +22,10 @@ OVMF=$VMDIR/firmware
     exit 1
 }
 
+[[ -z "$INSTALLATION_DISK" ]] && {
+    INSTALLATION_DISK=BaseSystem.img
+}
+
 MOREARGS=()
 
 [[ "$HEADLESS" = "1" ]] && {
@@ -45,7 +49,7 @@ qemu-system-x86_64 \
     -device ich9-ahci,id=sata \
     -drive id=ESP,if=none,format=qcow2,file=ESP.qcow2 \
     -device ide-hd,bus=sata.2,drive=ESP \
-    -drive id=InstallMedia,format=raw,if=none,file=BaseSystem.img \
+    -drive id=InstallMedia,format=raw,if=none,file=${INSTALLATION_DISK} \
     -device ide-hd,bus=sata.3,drive=InstallMedia \
     -drive id=SystemDisk,if=none,file="${SYSTEM_DISK}" \
     -device ide-hd,bus=sata.4,drive=SystemDisk \
