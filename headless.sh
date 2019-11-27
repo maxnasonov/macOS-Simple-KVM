@@ -10,8 +10,7 @@ OSK="ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc"
 	CPUS=1
 }
 
-
-[[ -z "$INSTALLATION_DISK" ]] || {
+[[ -z "$INSTALLATION_DISK" ]] && {
     INSTALLATION_DISK=BaseSystem.img
 }
 
