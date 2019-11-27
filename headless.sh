@@ -44,7 +44,7 @@ fi
 MOREARGS=()
 
 [[ "$HEADLESS" = "1" ]] && {
-    MOREARGS+=(-nographic -vnc 127.0.0.1:0 -k en-us)
+    MOREARGS+=(-nographic -vnc 127.0.0.1:0,to=100 -k en-us)
 }
 
 qemu-system-x86_64 \
