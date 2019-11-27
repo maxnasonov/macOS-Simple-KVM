@@ -2,6 +2,10 @@
 
 OSK="ourhardworkbythesewordsguardedpleasedontsteal(c)AppleComputerInc"
 
+[[ -z "$MAC_ADDRESS" ]] && {
+    MAC_ADDRESS=$(python /scripts/random_mac_for_macos.py)
+}
+
 [[ -z "$MEM" ]] && {
 	MEM="1G"
 }
@@ -57,9 +61,9 @@ qemu-system-x86_64 \
     -vga qxl \
     -usb -device usb-kbd -device usb-tablet \
     -netdev user,id=net0 \
-    -device e1000-82545em,netdev=net0,id=net0,mac=52:54:00:0e:0d:20 \
+    -device e1000-82545em,netdev=net0,id=net0,mac=${MAC_ADDRESS} \
     -device ich9-ahci,id=sata \
-    -drive id=ESP,if=none,format=qcow2,file=ESP.qcow2 \
+    -drive id=ESP,if=none,format=qcow2,file="$VMDIR/${VM_NAME}_ESP.qcow2" \
     -device ide-hd,bus=sata.2,drive=ESP \
     -drive id=InstallMedia,format=raw,if=none,file="${INSTALLATION_DISK}" \
     -device ide-hd,bus=sata.3,drive=InstallMedia \

@@ -12,7 +12,10 @@ if [[ -z "$VMDIR" ]]; then
     VMDIR=$PWD
 fi
 
-MAC_ADDRESS=$(python /scripts/random_mac_for_macos.py)
+[[ -z "$MAC_ADDRESS" ]] && {
+    MAC_ADDRESS=$(python /scripts/random_mac_for_macos.py)
+}
+
 UUID=$(uuidgen)
 MACHINE="$(qemu-system-x86_64 --machine help | grep q35 | cut -d" " -f1 | grep -Eoe ".*-[0-9.]+" | sort -rV | head -1)"
 OUT="/tmp/template.xml"
